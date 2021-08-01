@@ -3,6 +3,6 @@ import {Controller, Post} from '@nestjs/common'
 export class productController{
     @Post()
     addProduct():any{
-        console.log("testing")
+        console.log("testing add product api")
     }
 }
