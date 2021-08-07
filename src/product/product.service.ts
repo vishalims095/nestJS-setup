@@ -7,5 +7,10 @@ export class productService {
   private products : product[]=[]
   constructor(@InjectModel('product') private readonly productModel : Model<product>){}
   
-  // insertProduct()
+  async insertProduct(title : string, desc : string, price : number){
+    const productId = Math.random().toString()
+    const newProduct = new this.productModel({title : title, description : desc, price : price})
+    let saveData : any = await newProduct.save()
+    console.log(saveData)
+  }
 }
