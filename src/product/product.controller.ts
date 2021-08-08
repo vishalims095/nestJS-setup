@@ -38,7 +38,7 @@ export class productController{
         );
         return { message : "Updated data", data : updateProduct}
     }
-    @Delete(':id')
+    @Delete('/deleteProduct/:id')
     public async deleteProduct(
         @Param('id') productId : string,
     ){
