@@ -11,6 +11,10 @@ export class productService {
     const productId = Math.random().toString()
     const newProduct = new this.productModel({title : title, description : desc, price : price})
     let saveData : any = await newProduct.save()
-    console.log(saveData)
+    return saveData
+  }
+  async getProduct(){
+    let data = await this.productModel.find({})
+    return data;
   }
 }

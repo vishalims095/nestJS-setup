@@ -1,19 +1,25 @@
-import {Controller, Post, Body} from '@nestjs/common'
+import {Controller, Post, Body, Get} from '@nestjs/common'
 import {productService} from './product.service'
 @Controller ('product')
 export class productController{
     constructor(private readonly productService: productService) {}
     @Post()
-    addProduct(
+    public async addProduct(
        @Body('title') prodTitle : string,
        @Body('description') prodDesc : string,
        @Body('price') price : number
-    ):any{
-        const generatedId = this.productService.insertProduct(
+    ): Promise<any> {
+        const generatedId = await this.productService.insertProduct(
             prodTitle,
             prodDesc,
             price
         );
-        return { id : generatedId}
+        return { message : "Saved", data : generatedId}
+    }
+
+    @Get()
+    public async getProduct() : Promise<any>{
+        const productData = await this.productService.getProduct();
+        return { message : "Product data", data : productData}
     }
 }
