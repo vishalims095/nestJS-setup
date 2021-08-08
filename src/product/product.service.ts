@@ -13,10 +13,12 @@ export class productService {
     let saveData : any = await newProduct.save()
     return saveData
   }
+
   async getProduct(){
     let data = await this.productModel.find({})
     return data;
   }
+
   async updateProduct(id : string, title : string, desc : string, price : number){
     let updateData : any = {title : title, description : desc, price : price}
     let updateProduct = await this.productModel.findOneAndUpdate({_id : id}, updateData, {new : true})
@@ -24,5 +26,13 @@ export class productService {
       return 'Unable to update'
     }
     return updateProduct;
+  }
+  
+  async deleteProduct(id : string){
+    let removeProduct = await this.productModel.remove({_id : id})
+    if(!removeProduct){
+      return 'Unable to remove product'
+    }
+    return {}
   }
 }

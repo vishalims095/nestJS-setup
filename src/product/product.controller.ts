@@ -1,4 +1,4 @@
-import {Controller, Post, Body, Get, Patch, Param} from '@nestjs/common'
+import {Controller, Post, Body, Get, Patch, Param, Delete} from '@nestjs/common'
 import {productService} from './product.service'
 @Controller ('product')
 export class productController{
@@ -37,6 +37,15 @@ export class productController{
             price
         );
         return { message : "Updated data", data : updateProduct}
-
     }
+    @Delete(':id')
+    public async deleteProduct(
+        @Param('id') productId : string,
+    ){
+        const removeProduct = await this.productService.deleteProduct(
+            productId
+        )
+        return { message : "Product data removed.", data : removeProduct}
+    }
+    
 }
