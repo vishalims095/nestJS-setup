@@ -17,4 +17,12 @@ export class productService {
     let data = await this.productModel.find({})
     return data;
   }
+  async updateProduct(id : string, title : string, desc : string, price : number){
+    let updateData : any = {title : title, description : desc, price : price}
+    let updateProduct = await this.productModel.findOneAndUpdate({_id : id}, updateData, {new : true})
+    if(!updateProduct){
+      return 'Unable to update'
+    }
+    return updateProduct;
+  }
 }
