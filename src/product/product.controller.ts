@@ -1,5 +1,8 @@
 import {Controller, Post, Body, Get, Patch, Param, Delete} from '@nestjs/common'
 import {productService} from './product.service'
+import { upload } from '../service/uploadImg';
+import { request } from 'http';
+
 @Controller ('product')
 export class productController{
     constructor(private readonly productService: productService) {}
@@ -47,5 +50,16 @@ export class productController{
         )
         return { message : "Product data removed.", data : removeProduct}
     }
+
+    @Post('/addImage/')
+    public async addImage(
+        @Body('imageName') imageName : string,
+    ){
+        console.log("Add image calling")
+    }
+    // server.app.use('/api/v1/upload', express.Router().post('/', upload.single('file'), (req: any, res, next) => {   
+    //     console.log(req.file,'<<<------------')
+    //     res.send({'fileName' : req.file.filename || ''})
+    // }));  
     
 }

@@ -3,8 +3,13 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import {MongooseModule} from '@nestjs/mongoose'
 import {productModule} from'./product/products.modules'
+import { MulterModule } from '@nestjs/platform-express';
+
 @Module({
-  imports: [productModule, MongooseModule.forRoot('mongodb://127.0.0.1:27017/nestJs')],
+  imports: [productModule, MongooseModule.forRoot('mongodb://127.0.0.1:27017/nestJs'),
+  MulterModule.register({
+    dest: './upload',
+  })],
   controllers: [AppController],
   providers: [AppService],
 })
