@@ -77,5 +77,6 @@ export class productController{
 
     uploadFile(@UploadedFile() file: Express.Multer.File) {
     console.log(file);
+    return {message : 'success', file : file.filename};
     }
 }
