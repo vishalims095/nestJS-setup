@@ -7,8 +7,10 @@ import { MulterModule } from '@nestjs/platform-express';
 
 @Module({
   imports: [productModule, MongooseModule.forRoot('mongodb://127.0.0.1:27017/nestJs'),
-  MulterModule.register({
-    dest: './upload',
+  MulterModule.registerAsync({
+    useFactory: () => ({
+      dest: './upload',
+    }),
   })],
   controllers: [AppController],
   providers: [AppService],

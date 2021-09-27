@@ -1,6 +1,9 @@
-import {Controller, Post, Body, Get, Patch, Param, Delete} from '@nestjs/common'
+import {Controller, Post, Body, Get, Patch, Param, Delete, UseInterceptors, UploadedFile} from '@nestjs/common'
+import {FileInterceptor} from '@nestjs/platform-express'
 import {productService} from './product.service'
-import { upload } from '../service/uploadImg';
+import { Helper } from '../service/uploadImg';
+import { diskStorage } from 'multer';
+
 import { request } from 'http';
 
 @Controller ('product')
@@ -61,5 +64,18 @@ export class productController{
     //     console.log(req.file,'<<<------------')
     //     res.send({'fileName' : req.file.filename || ''})
     // }));  
-    
+
+    @Post('upload')
+    @UseInterceptors(
+        FileInterceptor('picture', {
+            storage: diskStorage({
+                destination: Helper.destinationPath,
+                filename: Helper.customFileName,
+            }),
+        }),
+    )
+
+    uploadFile(@UploadedFile() file: Express.Multer.File) {
+    console.log(file);
+    }
 }

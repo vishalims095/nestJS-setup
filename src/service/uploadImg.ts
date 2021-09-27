@@ -1,25 +1,17 @@
-
-export let UPLOAD_PATH = 'upload';
-import * as multer from 'multer';
-import * as path from 'path';
-
-var storage = multer.diskStorage({
-    destination: function (req, file, cb) {
-        cb(null, UPLOAD_PATH)
-    },
-    filename: function (req, file, cb) {
-        cb(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname))
+export class Helper {
+    static customFileName(req, file, cb) {
+      const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1e9);
+      let fileExtension = "";
+      if(file.mimetype.indexOf("jpeg") > -1){
+          fileExtension = "jpg"
+      }else if(file.mimetype.indexOf("png") > -1){
+          fileExtension = "png";
+      }
+      const originalName = file.originalname.split(".")[0];
+      cb(null, originalName + '-' + uniqueSuffix+"."+fileExtension);
     }
-})
-
-var profileStorage = multer.diskStorage({
-    destination: function (req, file, cb) {
-        cb(null, UPLOAD_PATH)
-    },
-    filename: function (req, file, cb) {
-        cb(null, req.loggedInUser._id + path.extname(file.originalname))
+   
+    static destinationPath(req, file, cb) {
+      cb(null, 'uploads/')
     }
-})
-
-export let upload = multer({ storage: storage })
-export let profileUpload = multer({ storage: profileStorage })
+  }
